@@ -6,7 +6,10 @@
   "main": "app.ts",
   "scripts": {
     "build": "tsc",
-    "start": "npx tsx src/app.ts"
+    "start": "console-ninja npx sequelize-cli db:migrate && tsx src/app.ts",
+    "migration-generate": "ts-node src/infra/scripts/ask-name-migrations.ts",
+    "migrations": "npx sequelize-cli db:migrate",
+    "migration-undo": "npx sequelize-cli db:migrate:undo"
   },
   "keywords": [],
   "author": "",
@@ -15,14 +18,18 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "mysql2": "^3.14.1",
+    "readline-sync": "^1.4.10",
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
-    "@types/node": "^22.15.3",
+    "@types/node": "^22.15.14",
+    "@types/readline-sync": "^1.4.8",
     "@types/sequelize": "^4.28.20",
+    "sequelize-cli": "^6.6.3",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
+    "tslib": "^2.8.1",
     "typescript": "^5.8.3"
   }
 }

@@ -13,9 +13,8 @@ app.listen(PORT, async () => {
   try {
     await sequelize.authenticate();
     console.log("Conexão realizada com sucesso!");
+    console.log(`Servidor rodando na porta ${PORT}`);
   } catch (error) {
     console.error("Erro na conexão com o banco:", error);
   }
-
-  console.log(`Servidor rodando na porta ${PORT}`);
 });
