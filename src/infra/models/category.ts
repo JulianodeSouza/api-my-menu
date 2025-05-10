@@ -1,12 +1,12 @@
 import { DataTypes, Model } from "sequelize";
 
-export class CategoriesEntity extends Model {
+export class CategoryEntity extends Model {
   declare id: number;
   declare name: string;
 }
 
 export default (sequelize: any) => {
-  CategoriesEntity.init(
+  CategoryEntity.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -19,8 +19,10 @@ export default (sequelize: any) => {
     },
     {
       sequelize,
-      modelName: "Categories",
-      tableName: "categories",
+      modelName: "Category",
+      tableName: "category",
     }
   );
+
+  return CategoryEntity;
 };

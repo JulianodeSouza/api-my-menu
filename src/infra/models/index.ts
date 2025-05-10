@@ -1,5 +1,8 @@
 import dotenv from "dotenv";
 import { Sequelize } from "sequelize";
+import Category from "./category";
+import ListPurchase from "./listPurchase";
+import MeasuredUnit from "./measuredUnit";
 
 dotenv.config();
 
@@ -17,5 +20,19 @@ const sequelize = new Sequelize(
     timezone: "-03:00",
   }
 );
+
+const CategoryEntity = Category(sequelize);
+const measuredUnitEntity = MeasuredUnit(sequelize);
+const ListPurchaseEntity = ListPurchase(sequelize);
+
+ListPurchaseEntity.belongsTo(CategoryEntity, { foreignKey: "idCategory" });
+ListPurchaseEntity.belongsTo(measuredUnitEntity, {
+  foreignKey: "idMeasuredUnit",
+});
+
+CategoryEntity.hasMany(ListPurchaseEntity, { foreignKey: "idCategory" });
+measuredUnitEntity.hasMany(ListPurchaseEntity, {
+  foreignKey: "idMeasuredUnit",
+});
 
 export default sequelize;
