@@ -1,0 +1,7 @@
+const path = require("path");
+require("dotenv").config(); // Carrega as variáveis do .env
+
+module.exports = {
+  config: path.resolve("src/infra/config/config.js"),
+  "migrations-path": path.resolve("src/infra/migrations"),
+};
