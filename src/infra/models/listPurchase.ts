@@ -1,8 +1,15 @@
 import { DataTypes, Model } from "sequelize";
 
 export class ListPurchaseEntity extends Model {
-  declare id: number;
+  declare id?: number;
+  declare idCategory?: number;
+  declare idMeasuredUnit?: number;
   declare name: string;
+  declare quantity: number;
+  declare checked: boolean;
+  declare amount: number;
+  declare totalCaught: number;
+  declare insertDatetime: Date;
 }
 
 export default (sequelize: any) => {
@@ -12,6 +19,10 @@ export default (sequelize: any) => {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
+      },
+      name: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       quantity: {
         type: DataTypes.REAL,
@@ -27,6 +38,9 @@ export default (sequelize: any) => {
       },
       totalCaught: {
         type: DataTypes.REAL,
+      },
+      insertDatetime: {
+        type: DataTypes.DATE,
       },
       idCategory: {
         type: DataTypes.INTEGER,

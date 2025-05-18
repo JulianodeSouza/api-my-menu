@@ -9,6 +9,10 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
       },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       quantity: {
         type: Sequelize.REAL,
         allowNull: false,
@@ -23,6 +27,9 @@ module.exports = {
       },
       totalCaught: {
         type: Sequelize.REAL,
+      },
+      insertDatetime: {
+        type: Sequelize.DATE,
       },
       idCategory: {
         type: Sequelize.INTEGER,

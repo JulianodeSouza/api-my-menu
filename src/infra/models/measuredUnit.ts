@@ -1,12 +1,13 @@
 import { DataTypes, Model } from "sequelize";
 
-export class measuredUnitEntity extends Model {
+export class MeasuredUnitEntity extends Model {
   declare id: number;
   declare name: string;
+  declare insertDatetime: Date;
 }
 
 export default (sequelize: any) => {
-  measuredUnitEntity.init(
+  MeasuredUnitEntity.init(
     {
       id: {
         type: DataTypes.INTEGER,
@@ -16,6 +17,9 @@ export default (sequelize: any) => {
       name: {
         type: DataTypes.STRING,
       },
+      insertDatetime: {
+        type: DataTypes.DATE,
+      },
     },
     {
       sequelize,
@@ -24,5 +28,5 @@ export default (sequelize: any) => {
     }
   );
 
-  return measuredUnitEntity;
+  return MeasuredUnitEntity;
 };

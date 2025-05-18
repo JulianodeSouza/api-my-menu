@@ -10,8 +10,9 @@ export const errorHandler = (
   logMessage(error);
 
   const message = error.message || "Internal Server Error";
+  const statusCode = error.statusCode || 500;
 
-  res.status(500).json({
+  res.status(statusCode).json({
     data: {
       message,
     },

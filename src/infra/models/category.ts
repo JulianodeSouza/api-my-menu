@@ -3,6 +3,7 @@ import { DataTypes, Model } from "sequelize";
 export class CategoryEntity extends Model {
   declare id: number;
   declare name: string;
+  declare insertDatetime: Date;
 }
 
 export default (sequelize: any) => {
@@ -16,10 +17,13 @@ export default (sequelize: any) => {
       name: {
         type: DataTypes.STRING,
       },
+      insertDatetime: {
+        type: DataTypes.DATE,
+      },
     },
     {
       sequelize,
-      modelName: "Category",
+      modelName: "category",
       tableName: "category",
     }
   );

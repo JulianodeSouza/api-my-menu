@@ -2,6 +2,7 @@
   "scripts": {
     "build": "tsc",
     "start": "npx sequelize-cli db:migrate && nodemon ts-node src/app.ts",
+    "start:dev": "npx sequelize-cli db:migrate && tsx watch src/app.ts",
     "migration:generate": "ts-node src/infra/scripts/ask-name-migration.js",
     "migrations": "npx sequelize-cli db:migrate",
     "migration:undo": "npx sequelize-cli db:migrate:undo"
@@ -11,11 +12,12 @@
     "express": "^5.1.0",
     "mysql2": "^3.14.1",
     "readline-sync": "^1.4.10",
-    "sequelize": "^6.37.7"
+    "sequelize": "^6.37.7",
+    "tsx": "^4.19.4"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
-    "@types/node": "^22.15.14",
+    "@types/node": "^22.15.18",
     "@types/readline-sync": "^1.4.8",
     "@types/sequelize": "^4.28.20",
     "nodemon": "^3.1.10",
