@@ -14,7 +14,7 @@ module.exports = {
         allowNull: false,
       },
       quantity: {
-        type: Sequelize.REAL,
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       checked: {
@@ -22,11 +22,11 @@ module.exports = {
         defaultValue: false,
       },
       amount: {
-        type: Sequelize.REAL,
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       totalCaught: {
-        type: Sequelize.REAL,
+        type: Sequelize.FLOAT,
       },
       insertDatetime: {
         type: Sequelize.DATE,
