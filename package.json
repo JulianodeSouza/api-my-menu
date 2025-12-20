@@ -1,7 +1,7 @@
 {
   "scripts": {
     "build": "tsc",
-    "start": "npx sequelize-cli db:migrate && nodemon ts-node src/app.ts",
+    "start": "npx sequelize-cli db:migrate && node build/app.js",
     "start:dev": "npx sequelize-cli db:migrate && tsx watch src/app.ts",
     "migration:generate": "ts-node src/infra/scripts/ask-name-migration.js",
     "migrations": "npx sequelize-cli db:migrate",
