@@ -1,8 +1,8 @@
 {
   "scripts": {
     "build": "tsc",
-    "start": "npx sequelize-cli db:migrate && nodemon ts-node src/app.ts",
-    "start:dev": "npx sequelize-cli db:migrate && tsx watch src/app.ts",
+    "start": "cross-env NODE_ENV=production npx sequelize-cli db:migrate && cross-env NODE_ENV=production node build/app.js",
+    "start:dev": "cross-env NODE_ENV=development npx sequelize-cli db:migrate && cross-env NODE_ENV=development tsx watch src/app.ts",
     "migration:generate": "ts-node src/infra/scripts/ask-name-migration.js",
     "migrations": "npx sequelize-cli db:migrate",
     "migration:undo": "npx sequelize-cli db:migrate:undo"
@@ -11,8 +11,6 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "mysql2": "^3.14.1",
-    "pg": "^8.16.3",
-    "pg-hstore": "^2.3.4",
     "readline-sync": "^1.4.10",
     "sequelize": "^6.37.7",
     "tsx": "^4.19.4"
@@ -22,6 +20,7 @@
     "@types/node": "^22.15.18",
     "@types/readline-sync": "^1.4.8",
     "@types/sequelize": "^4.28.20",
+    "cross-env": "^10.1.0",
     "nodemon": "^3.1.10",
     "sequelize-cli": "^6.6.3",
     "ts-node": "^10.9.2",
