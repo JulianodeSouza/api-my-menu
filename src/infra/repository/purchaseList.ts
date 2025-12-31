@@ -17,7 +17,7 @@ export default class PurchaseListRepository extends RepositoryModel {
         model: CategoryEntity,
         as: "category",
         attributes: [
-          ["id", "idCategory"],
+          ["id", "id_category"],
           ["name", "name"],
         ],
       },
@@ -25,7 +25,7 @@ export default class PurchaseListRepository extends RepositoryModel {
         model: MeasuredUnitEntity,
         as: "measuredUnit",
         attributes: [
-          ["id", "idMeasuredUnit"],
+          ["id", "id_measured_unit"],
           ["name", "measuredUnit"],
         ],
       },
@@ -87,6 +87,7 @@ export default class PurchaseListRepository extends RepositoryModel {
   async removeRegister(idListPurchase: number) {
     return await this.delete({
       model: ListPurchaseEntity,
+      data: { active: false },
       params: { id: idListPurchase },
     });
   }
@@ -98,15 +99,15 @@ export default class PurchaseListRepository extends RepositoryModel {
     const itemToSave: ListPurchaseEntity = ListPurchaseEntity.build({
       name: data.name,
       quantity: data.quantity,
-      idCategory: data.category,
-      idMeasuredUnit: data.measuredUnit,
+      id_category: data.category,
+      id_measured_unit: data.measuredUnit,
       totalCaught: data.totalCaught || 0,
       amount: data.amount || 0,
       checked: data.checked || false,
     });
 
     if (!isUpdate) {
-      itemToSave.insertDatetime = new Date();
+      itemToSave.insert_datetime = new Date();
     }
 
     return itemToSave;

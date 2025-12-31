@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc",
     "start": "cross-env NODE_ENV=production npx sequelize-cli db:migrate && node build/app.js",
-    "start:dev": "cross-env NODE_ENV=development npx sequelize-cli db:migrate && cross-env NODE_ENV=development tsx watch src/app.ts",
+    "start:dev": "cross-env NODE_ENV=development npx sequelize-cli db:migrate && nodemon --exec tsx src/app.ts",
     "migration:generate": "ts-node src/infra/scripts/ask-name-migration.js",
     "migrations": "npx sequelize-cli db:migrate",
     "migration:undo": "npx sequelize-cli db:migrate:undo"

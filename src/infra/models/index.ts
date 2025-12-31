@@ -28,14 +28,14 @@ const CategoryEntity = Category(sequelize);
 const MeasuredUnitEntity = MeasuredUnit(sequelize);
 const ListPurchaseEntity = ListPurchase(sequelize);
 
-ListPurchaseEntity.belongsTo(CategoryEntity, { foreignKey: "idCategory" });
+ListPurchaseEntity.belongsTo(CategoryEntity, { foreignKey: "id_category" });
 ListPurchaseEntity.belongsTo(MeasuredUnitEntity, {
-  foreignKey: "idMeasuredUnit",
+  foreignKey: "id_measured_unit",
 });
 
-CategoryEntity.hasMany(ListPurchaseEntity, { foreignKey: "idCategory" });
+CategoryEntity.hasMany(ListPurchaseEntity, { foreignKey: "id_category" });
 MeasuredUnitEntity.hasMany(ListPurchaseEntity, {
-  foreignKey: "idMeasuredUnit",
+  foreignKey: "id_measured_unit",
 });
 
 export default sequelize;

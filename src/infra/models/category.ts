@@ -3,7 +3,7 @@ import { DataTypes, Model } from "sequelize";
 export class CategoryEntity extends Model {
   declare id: number;
   declare name: string;
-  declare insertDatetime: Date;
+  declare insert_datetime: Date;
 }
 
 export default (sequelize: any) => {
@@ -17,7 +17,7 @@ export default (sequelize: any) => {
       name: {
         type: DataTypes.STRING,
       },
-      insertDatetime: {
+      insert_datetime: {
         type: DataTypes.DATE,
       },
     },

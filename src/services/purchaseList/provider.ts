@@ -9,8 +9,9 @@ export default class PurchaseListProvider extends DefaultProvider {
       c.name as category,
       mu.name as measuredUnit
       from list_purchase lp
-      inner join category c on lp.idCategory = c.id
-      inner join measured_unit mu on lp.idMeasuredUnit = mu.id`;
+      inner join category c on lp.id_category = c.id
+      inner join measured_unit mu on lp.id_measured_unit = mu.id
+      where lp.active = 1`;
 
     const listPurchase = await this.getAll(sql);
     return listPurchase;

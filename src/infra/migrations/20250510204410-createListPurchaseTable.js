@@ -28,17 +28,21 @@ module.exports = {
       totalCaught: {
         type: Sequelize.REAL,
       },
-      insertDatetime: {
+      insert_datetime: {
         type: Sequelize.DATE,
       },
-      idCategory: {
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+      },
+      id_category: {
         type: Sequelize.INTEGER,
         references: {
           model: "category",
           key: "id",
         },
       },
-      idMeasuredUnit: {
+      id_measured_unit: {
         type: Sequelize.INTEGER,
         references: {
           model: "measured_unit",

@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      insertDatetime: {
+      insert_datetime: {
         type: Sequelize.DATE,
       },
     });

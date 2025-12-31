@@ -9,6 +9,7 @@ export type IListPurchase = {
   quantity: number;
   category: string;
   measuredUnit: string;
+  active: boolean;
   totalCaught?: number;
   amount?: number;
   checked?: boolean;
