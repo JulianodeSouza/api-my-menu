@@ -23,7 +23,7 @@ module.exports = {
       },
       amount: {
         type: Sequelize.REAL,
-        allowNull: false,
+        allowNull: true,
       },
       totalCaught: {
         type: Sequelize.REAL,

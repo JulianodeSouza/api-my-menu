@@ -73,11 +73,11 @@ export default class PurchaseListRepository extends RepositoryModel {
 
   async updateRegister(
     idListPurchase: number,
-    data: IListPurchase
+    data: Partial<IListPurchase>
   ): Promise<void> {
-    const itemFormatted = this.formatToSave(data);
+    const itemFormatted = this.formatToSave(data, true);
 
-    return await this.update({
+    await this.update({
       model: ListPurchaseEntity,
       params: { id: idListPurchase },
       data: itemFormatted,
@@ -93,22 +93,37 @@ export default class PurchaseListRepository extends RepositoryModel {
   }
 
   private formatToSave(
-    data: IListPurchase,
+    data: Partial<IListPurchase> & { itemChecked?: boolean },
     isUpdate: boolean = false
-  ): ListPurchaseEntity {
-    const itemToSave: ListPurchaseEntity = ListPurchaseEntity.build({
-      name: data.name,
-      quantity: data.quantity,
-      id_category: data.category,
-      id_measured_unit: data.measuredUnit,
-      totalCaught: data.totalCaught || 0,
-      amount: data.amount || 0,
-      checked: data.checked || false,
-    });
+  ): ListPurchaseEntity | Partial<ListPurchaseEntity> {
+    if (isUpdate) {
+      const itemToUpdate: Partial<ListPurchaseEntity> = {};
 
-    if (!isUpdate) {
-      itemToSave.insert_datetime = new Date();
+      if (data.name) itemToUpdate.name = data.name;
+      if (data.quantity) itemToUpdate.quantity = data.quantity;
+      if (data.category) itemToUpdate.id_category = Number(data.category);
+      if (data.measuredUnit)
+        itemToUpdate.id_measured_unit = Number(data.measuredUnit);
+      if (data.totalCaught !== undefined) itemToUpdate.totalCaught = data.totalCaught;
+      if (data.amount !== undefined) itemToUpdate.amount = data.amount;
+      if (data.checked !== undefined) itemToUpdate.checked = data.checked;
+      if (data.itemChecked !== undefined) itemToUpdate.checked = data.itemChecked;
+      if (data.active !== undefined) itemToUpdate.active = data.active;
+
+      return itemToUpdate;
     }
+
+    const itemToSave: ListPurchaseEntity = ListPurchaseEntity.build();
+
+    if (data.name) itemToSave.name = data.name;
+    if (data.quantity) itemToSave.quantity = data.quantity;
+    if (data.category) itemToSave.id_category = Number(data.category);
+    if (data.measuredUnit)
+      itemToSave.id_measured_unit = Number(data.measuredUnit);
+    if (data.totalCaught) itemToSave.totalCaught = data.totalCaught;
+    if (data.amount) itemToSave.amount = data.amount;
+    if (data.checked) itemToSave.checked = data.checked;
+    itemToSave.insert_datetime = new Date();
 
     return itemToSave;
   }
