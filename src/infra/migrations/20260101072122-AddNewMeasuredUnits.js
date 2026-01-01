@@ -10,13 +10,13 @@ module.exports = {
       },
     ];
 
-    queryInterface.bulkInsert("measured_units", newMeasuredUnits);
+    await queryInterface.bulkInsert("measured_unit", newMeasuredUnits);
   },
 
   async down(queryInterface) {
     const unitNames = ["cx"];
 
-    queryInterface.bulkDelete("measured_units", {
+    await queryInterface.bulkDelete("measured_unit", {
       name: unitNames,
     });
   },
