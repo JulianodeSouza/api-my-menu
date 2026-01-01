@@ -35,7 +35,7 @@ export default (sequelize: any) => {
       },
       amount: {
         type: DataTypes.REAL,
-        allowNull: false,
+        allowNull: true,
       },
       totalCaught: {
         type: DataTypes.REAL,

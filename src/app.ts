@@ -4,6 +4,7 @@ if (process.env.NODE_ENV === "production") {
 import express from "express";
 import { router } from "./api";
 import sequelize from "./infra/models";
+import { logMessage } from "./services/utils";
 const app = express();
 
 app.use(express.json());
@@ -26,10 +27,10 @@ app.listen(PORT, "0.0.0.0", () => {
   sequelize
     .authenticate()
     .then(() => {
-      console.log("Conexão realizada com sucesso!");
-      console.log(`Servidor rodando na porta ${PORT}`);
+      logMessage("Conexão realizada com sucesso!");
+      logMessage(`Servidor rodando na porta ${PORT}`);
     })
     .catch((error) => {
-      console.error("Erro na conexão com o banco:", error);
+      logMessage(`Erro na conexão com o banco: ${error}`);
     });
 });

@@ -14,3 +14,8 @@ export type IListPurchase = {
   amount?: number;
   checked?: boolean;
 };
+
+export type ICheckedData = Pick<
+  IListPurchase,
+  "checked" | "totalCaught" | "amount"
+>;
