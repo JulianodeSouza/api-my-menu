@@ -13,16 +13,17 @@ class PurchaseListService {
         const items = await this.provider.getListPurchase();
         const purchaseListByCategory = [];
         for (const item of items) {
-            const categoryAlreadyExists = purchaseListByCategory.find((category) => category.category === item.category);
+            const categoryAlreadyExists = purchaseListByCategory.find((category) => category.category === item.categoryName);
             if (!categoryAlreadyExists) {
                 const newCategory = {
-                    category: item.category,
-                    items: [item],
+                    category: item.categoryName,
+                    categoryIcon: item.categoryIcon,
+                    items: [this.formatItem(item)],
                 };
                 purchaseListByCategory.push(newCategory);
             }
             else {
-                const index = purchaseListByCategory.findIndex((category) => category.category === item.category);
+                const index = purchaseListByCategory.findIndex((category) => category.category === item.categoryName);
                 purchaseListByCategory[index].items.push(item);
             }
         }
@@ -34,6 +35,23 @@ class PurchaseListService {
             throw new errors_1.default("Item not found", 400);
         }
         return item;
+    }
+    formatItem(item) {
+        return {
+            id: item.id,
+            name: item.name,
+            quantity: Number(item.quantity),
+            category: item.category,
+            categoryName: item.categoryName,
+            categoryIcon: item.categoryIcon,
+            measuredUnitName: item.measuredUnitName,
+            measuredUnit: item.measuredUnit,
+            unitSymbol: item.unitSymbol,
+            active: !!item.active,
+            totalCaught: Number(item.totalCaught),
+            amount: Number(item.amount),
+            checked: !!item.checked,
+        };
     }
 }
 exports.default = PurchaseListService;

@@ -7,7 +7,9 @@ const repository_1 = __importDefault(require("./repository"));
 const measuredUnit_1 = require("../models/measuredUnit");
 class MeasuredUnitRepository extends repository_1.default {
     async getAllMeasuredUnits() {
-        const measuredUnits = await measuredUnit_1.MeasuredUnitEntity.findAll();
+        const measuredUnits = await this.getAll({
+            model: measuredUnit_1.MeasuredUnitEntity,
+        });
         return measuredUnits;
     }
 }

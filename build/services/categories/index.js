@@ -9,8 +9,8 @@ class CategoriesService extends provider_1.default {
         super();
         this.provider = new provider_1.default();
     }
-    getCategories() {
-        const categories = this.provider.getAllCategories();
+    async getCategories() {
+        const categories = await this.provider.getAllCategories();
         return categories;
     }
 }

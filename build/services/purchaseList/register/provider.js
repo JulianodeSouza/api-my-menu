@@ -19,7 +19,10 @@ class PurchaseListRegisterProvider {
             active: true,
         });
         for (const item of allItensActives) {
-            await supermarketRepository.updateRegister(item.id, { active: false });
+            await supermarketRepository.updateRegister(item.id, {
+                active: false,
+                finishDatePurchase: new Date(),
+            });
         }
     }
 }

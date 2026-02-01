@@ -15,6 +15,9 @@ exports.default = (sequelize) => {
         name: {
             type: sequelize_1.DataTypes.STRING,
         },
+        icon: {
+            type: sequelize_1.DataTypes.STRING,
+        },
         insert_datetime: {
             type: sequelize_1.DataTypes.DATE,
         },

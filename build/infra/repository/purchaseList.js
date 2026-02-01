@@ -99,6 +99,7 @@ class PurchaseListRepository extends repository_1.default {
             return itemToUpdate;
         }
         const itemToSave = listPurchase_1.ListPurchaseEntity.build();
+        console.log("#### data: ", data);
         if (data.name)
             itemToSave.name = data.name;
         if (data.quantity)

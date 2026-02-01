@@ -21,6 +21,7 @@ class CategoriesRepository extends repository_1.default {
     formatToSave(data, isUpdate = false) {
         const itemToSave = category_1.CategoryEntity.build({
             name: data.name,
+            icon: data.icon,
         });
         if (!isUpdate) {
             itemToSave.insert_datetime = new Date();
