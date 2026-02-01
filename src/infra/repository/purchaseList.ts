@@ -116,9 +116,6 @@ export default class PurchaseListRepository extends RepositoryModel {
     }
 
     const itemToSave: ListPurchaseEntity = ListPurchaseEntity.build();
-
-    console.log("#### data: ", data);
-
     if (data.name) itemToSave.name = data.name;
     if (data.quantity) itemToSave.quantity = data.quantity;
     if (data.category) itemToSave.id_category = Number(data.category);
