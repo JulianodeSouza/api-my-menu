@@ -10,7 +10,7 @@ type SupermarketParams = {
 
 export default class PurchaseListRepository extends RepositoryModel {
   async getAllListPurchase(
-    params?: SupermarketParams
+    params?: SupermarketParams,
   ): Promise<IListPurchase[]> {
     const includes = [
       {
@@ -73,7 +73,7 @@ export default class PurchaseListRepository extends RepositoryModel {
 
   async updateRegister(
     idListPurchase: number,
-    data: Partial<IListPurchase>
+    data: Partial<IListPurchase>,
   ): Promise<void> {
     const itemFormatted = this.formatToSave(data, true);
 
@@ -94,7 +94,7 @@ export default class PurchaseListRepository extends RepositoryModel {
 
   private formatToSave(
     data: Partial<IListPurchase> & { itemChecked?: boolean },
-    isUpdate: boolean = false
+    isUpdate: boolean = false,
   ): ListPurchaseEntity | Partial<ListPurchaseEntity> {
     if (isUpdate) {
       const itemToUpdate: Partial<ListPurchaseEntity> = {};
@@ -104,16 +104,20 @@ export default class PurchaseListRepository extends RepositoryModel {
       if (data.category) itemToUpdate.id_category = Number(data.category);
       if (data.measuredUnit)
         itemToUpdate.id_measured_unit = Number(data.measuredUnit);
-      if (data.totalCaught !== undefined) itemToUpdate.totalCaught = data.totalCaught;
+      if (data.totalCaught !== undefined)
+        itemToUpdate.totalCaught = data.totalCaught;
       if (data.amount !== undefined) itemToUpdate.amount = data.amount;
       if (data.checked !== undefined) itemToUpdate.checked = data.checked;
-      if (data.itemChecked !== undefined) itemToUpdate.checked = data.itemChecked;
+      if (data.itemChecked !== undefined)
+        itemToUpdate.checked = data.itemChecked;
       if (data.active !== undefined) itemToUpdate.active = data.active;
 
       return itemToUpdate;
     }
 
     const itemToSave: ListPurchaseEntity = ListPurchaseEntity.build();
+
+    console.log("#### data: ", data);
 
     if (data.name) itemToSave.name = data.name;
     if (data.quantity) itemToSave.quantity = data.quantity;

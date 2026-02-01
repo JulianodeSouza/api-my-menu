@@ -1,3 +1,4 @@
+import { ListPurchaseEntity } from "@/infra/models/listPurchase";
 import PurchaseListRepository from "@/infra/repository/purchaseList";
 import { ICheckedData, IListPurchase } from "@/types/listPurchase";
 
@@ -20,7 +21,10 @@ export default class PurchaseListRegisterProvider {
     });
 
     for (const item of allItensActives) {
-      await supermarketRepository.updateRegister(item.id, { active: false });
+      await supermarketRepository.updateRegister(item.id, {
+        active: false,
+        finishDatePurchase: new Date(),
+      });
     }
   }
 }

@@ -7,40 +7,39 @@ module.exports = {
       {
         name: "Bebidas",
         insert_datetime: Sequelize.literal("CURRENT_TIMESTAMP"),
+        icon: "BottleWine",
       },
       {
-        name: "Frutas",
+        name: "Hortifruti",
         insert_datetime: Sequelize.literal("CURRENT_TIMESTAMP"),
+        icon: "Apple",
       },
       {
         name: "Carnes",
         insert_datetime: Sequelize.literal("CURRENT_TIMESTAMP"),
+        icon: "Beef",
       },
       {
-        name: "Laticínios",
+        name: "Pet",
         insert_datetime: Sequelize.literal("CURRENT_TIMESTAMP"),
+        icon: "PawPrint",
       },
+
       {
         name: "Limpeza",
         insert_datetime: Sequelize.literal("CURRENT_TIMESTAMP"),
+        icon: "BrushCleaning",
       },
       {
         name: "Higiene",
         insert_datetime: Sequelize.literal("CURRENT_TIMESTAMP"),
+        icon: "Bubbles",
       },
       {
-        name: "Legumes",
+        name: "Mercearia",
         insert_datetime: Sequelize.literal("CURRENT_TIMESTAMP"),
+        icon: "Utensils",
       },
-      {
-        name: "Temperos",
-        insert_datetime: Sequelize.literal("CURRENT_TIMESTAMP"),
-      },
-      {
-        name: "Não perecíveis",
-        insert_datetime: Sequelize.literal("CURRENT_TIMESTAMP"),
-      },
-      { name: "Pet", insert_datetime: Sequelize.literal("CURRENT_TIMESTAMP") },
     ];
 
     await queryInterface.bulkInsert("category", categories);
@@ -49,17 +48,13 @@ module.exports = {
   async down(queryInterface) {
     const categories = [
       { name: "Bebidas" },
-      { name: "Frutas" },
+      { name: "Hortifruti" },
       { name: "Carnes" },
-      { name: "Laticínios" },
+      { name: "Pet" },
       { name: "Limpeza" },
       { name: "Higiene" },
-      { name: "Legumes" },
-      { name: "Temperos" },
-      { name: "Não perecíveis" },
-      { name: "Pet" },
+      { name: "Mercearia" },
     ];
-
     await queryInterface.bulkDelete("category", categories);
   },
 };

@@ -1,4 +1,3 @@
-import { IListPurchase } from "@/types/listPurchase";
 import { CategoryEntity } from "../models/category";
 import RepositoryModel from "./repository";
 import { ICategories } from "@/types/categories";
@@ -22,10 +21,11 @@ export default class CategoriesRepository extends RepositoryModel {
 
   private formatToSave(
     data: ICategories,
-    isUpdate: boolean = false
+    isUpdate: boolean = false,
   ): CategoryEntity {
     const itemToSave: CategoryEntity = CategoryEntity.build({
       name: data.name,
+      icon: data.icon,
     });
 
     if (!isUpdate) {

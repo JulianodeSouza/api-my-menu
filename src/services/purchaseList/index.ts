@@ -15,19 +15,20 @@ export default class PurchaseListService {
     const purchaseListByCategory: IListPurchaseView[] = [];
     for (const item of items) {
       const categoryAlreadyExists = purchaseListByCategory.find(
-        (category) => category.category === item.category
+        (category) => category.category === item.categoryName,
       );
 
       if (!categoryAlreadyExists) {
         const newCategory: IListPurchaseView = {
-          category: item.category,
-          items: [item],
+          category: item.categoryName,
+          categoryIcon: item.categoryIcon,
+          items: [this.formatItem(item)],
         };
 
         purchaseListByCategory.push(newCategory);
       } else {
         const index = purchaseListByCategory.findIndex(
-          (category) => category.category === item.category
+          (category) => category.category === item.categoryName,
         );
 
         purchaseListByCategory[index].items.push(item);
@@ -45,5 +46,23 @@ export default class PurchaseListService {
     }
 
     return item;
+  }
+
+  private formatItem(item: IListPurchase): IListPurchase {
+    return {
+      id: item.id,
+      name: item.name,
+      quantity: Number(item.quantity),
+      category: item.category,
+      categoryName: item.categoryName,
+      categoryIcon: item.categoryIcon,
+      measuredUnitName: item.measuredUnitName,
+      measuredUnit: item.measuredUnit,
+      unitSymbol: item.unitSymbol,
+      active: !!item.active,
+      totalCaught: Number(item.totalCaught),
+      amount: Number(item.amount),
+      checked: !!item.checked,
+    };
   }
 }

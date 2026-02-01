@@ -35,6 +35,11 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         defaultValue: true,
       },
+      finish_date_purchase: {
+        type: Sequelize.DATE,
+        allowNull: true,
+        defaultValue: null,
+      },
       id_category: {
         type: Sequelize.INTEGER,
         references: {

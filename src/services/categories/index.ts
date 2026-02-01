@@ -9,8 +9,8 @@ export default class CategoriesService extends CategoriesProvider {
     this.provider = new CategoriesProvider();
   }
 
-  getCategories(): Promise<ICategories[]> {
-    const categories = this.provider.getAllCategories();
+  async getCategories(): Promise<ICategories[]> {
+    const categories = await this.provider.getAllCategories();
     return categories;
   }
 }

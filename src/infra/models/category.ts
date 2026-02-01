@@ -4,6 +4,7 @@ export class CategoryEntity extends Model {
   declare id: number;
   declare name: string;
   declare insert_datetime: Date;
+  declare icon: string;
 }
 
 export default (sequelize: any) => {
@@ -17,6 +18,9 @@ export default (sequelize: any) => {
       name: {
         type: DataTypes.STRING,
       },
+      icon: {
+        type: DataTypes.STRING,
+      },
       insert_datetime: {
         type: DataTypes.DATE,
       },
@@ -25,7 +29,7 @@ export default (sequelize: any) => {
       sequelize,
       modelName: "category",
       tableName: "category",
-    }
+    },
   );
 
   return CategoryEntity;

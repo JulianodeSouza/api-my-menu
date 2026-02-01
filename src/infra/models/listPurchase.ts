@@ -43,6 +43,10 @@ export default (sequelize: any) => {
       insert_datetime: {
         type: DataTypes.DATE,
       },
+      finishDatePurchase: {
+        type: DataTypes.DATE,
+        field: "finish_date_purchase",
+      },
       id_category: {
         type: DataTypes.INTEGER,
         references: {
@@ -60,13 +64,13 @@ export default (sequelize: any) => {
       active: {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
-      }
+      },
     },
     {
       sequelize,
       modelName: "ListPurchase",
       tableName: "list_purchase",
-    }
+    },
   );
 
   return ListPurchaseEntity;

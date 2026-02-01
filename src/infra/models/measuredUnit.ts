@@ -3,7 +3,8 @@ import { DataTypes, Model } from "sequelize";
 export class MeasuredUnitEntity extends Model {
   declare id: number;
   declare name: string;
-  declare insert_datetime: Date;
+  declare insertDatetime: Date;
+  declare unitSymbol: string;
 }
 
 export default (sequelize: any) => {
@@ -17,15 +18,20 @@ export default (sequelize: any) => {
       name: {
         type: DataTypes.STRING,
       },
-      insert_datetime: {
+      unitSymbol: {
+        type: DataTypes.STRING,
+        field: "unit_symbol",
+      },
+      insertDatetime: {
         type: DataTypes.DATE,
+        field: "insert_datetime",
       },
     },
     {
       sequelize,
       modelName: "measuredUnit",
       tableName: "measured_unit",
-    }
+    },
   );
 
   return MeasuredUnitEntity;

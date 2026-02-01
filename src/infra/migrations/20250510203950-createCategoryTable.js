@@ -13,6 +13,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      icon: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       insert_datetime: {
         type: Sequelize.DATE,
       },

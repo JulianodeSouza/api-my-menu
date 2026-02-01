@@ -3,10 +3,10 @@ import DefaultProvider from "../system/defaultProvider";
 import { ICategories } from "@/types/categories";
 
 export default class CategoriesProvider extends DefaultProvider {
-  getAllCategories(): Promise<ICategories[]> {
+  async getAllCategories(): Promise<ICategories[]> {
     const repositoryCategories = new CategoriesRepository();
 
-    const categories = repositoryCategories.getAllCategories();
+    const categories = await repositoryCategories.getAllCategories();
     return categories;
   }
 }
