@@ -33,24 +33,24 @@ O projeto segue um padrão de arquitetura em camadas (Layered Architecture) foca
    - Repositórios (`infra/repository/`) processam a manipulação direta com o Banco de Dados.
 
 2. **Tipagem Forte:** 
-   - A tipagem deve ser declarada em arquivos específicos em `/src/types/` para reaproveitamento em diferentes camadas.
+   - A tipagem é declarada em arquivos específicos em `/src/types/` para reaproveitamento em diferentes camadas.
    
 3. **Mapeamento de Caminhos (Aliases):**
-   - É permitido e encorajado o uso do alias `@/` para importar módulos a fim de evitar `../../../../`, facilitando refatorações futuras.
+   - É permitido uso do alias `@/` para importar módulos a fim de evitar `../../../../`, facilitando refatorações futuras.
 
 4. **Tratamento de Erros:**
-   - Erros devem ser capturados e manipulados pelo middleware centralizado (`/src/api/middlewares/error-handler/`), garantindo consistência e padronização da resposta da API.
+   - Erros são capturados e manipulados pelo middleware centralizado (`/src/api/middlewares/error-handler/`), garantindo consistência e padronização da resposta da API.
 
 5. **Migrações e Modelos:**
-   - Sempre utilize as migrations antes de fazer modificações diretas no banco de dados. Os modelos do TS devem ser o reflexo exato da estrutura definida nas migrations.
+   - É sempre utilizado migrations antes de fazer modificações diretas no banco de dados.
 
 6. **Padrões de Nomenclatura (Naming Conventions):**
-   - **Variáveis, Atributos e Funções:** Devem ser escritas em `camelCase` (ex: `categoryId`, `getUser`).
-   - **Classes, Interfaces e Tipos:** Devem ser escritos em `PascalCase` (ex: `Category`, `MeasuredUnit`).
-   - **Constantes Globais e Variáveis de Ambiente:** Devem utilizar `UPPER_SNAKE_CASE` (ex: `DB_HOST`, `PORT`).
+   - **Variáveis, Atributos e Funções:** São escritas em `camelCase` (ex: `categoryId`, `getUser`).
+   - **Classes, Interfaces e Tipos:** São escritos em `PascalCase` (ex: `Category`, `MeasuredUnit`).
+   - **Constantes Globais e Variáveis de Ambiente:** São utilizadas `UPPER_SNAKE_CASE` (ex: `DB_HOST`, `PORT`).
 
 7. **Padrões de Commit (Conventional Commits):**
-   - Utilize o padrão [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/) nas mensagens.
+   - Utilizado o padrão [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/) nas mensagens.
    - **Prefixos mais comuns:**
      - `feat:` Nova funcionalidade (feature).
      - `fix:` Correção de bug.
@@ -58,44 +58,3 @@ O projeto segue um padrão de arquitetura em camadas (Layered Architecture) foca
      - `docs:` Alterações e melhorias na documentação.
      - `refactor:` Refatoração de código que não adiciona feature nem corrige bug.
      - `test:` Adição ou modificação de testes.
-
-## ⚙️ Instalação e Execução
-
-### Pré-requisitos
-- Node.js (versão 18+ recomendada)
-- MySQL configurado e em execução.
-
-### Passos para executar localmente:
-
-1. **Instalar dependências:**
-   ```bash
-   npm install
-   ```
-
-2. **Configuração de Variáveis de Ambiente:**
-   - Configure o ambiente baseando-se nas credenciais do seu banco de dados MySQL (exemplo usando `.env`). *(Se aplicável: copie `.env.example` para `.env`)*.
-
-3. **Geração e Execução das Migrations:**
-   O script de desenvolvimento executa as migrations automaticamente na inicialização, mas você pode criá-las ou rodá-las manualmente:
-   ```bash
-   npm run migration:generate  # Script para facilitar a criação de uma nova migration
-   npm run migrations          # Roda as pendentes
-   npm run migration:undo      # Desfaz a última
-   ```
-
-4. **Executar a API em modo Desenvolvimento:**
-   Executará automaticamente a stack usando nodemon. As `migrations` rodam no start da JVM.
-   ```bash
-   npm run start:dev
-   ```
-
-5. **Build para Produção:**
-   Compila o TypeScript (`build`) e resolve os path aliases para JS.
-   ```bash
-   npm run build
-   ```
-
-6. **Rodar em Produção:**
-   ```bash
-   npm run start
-   ```
