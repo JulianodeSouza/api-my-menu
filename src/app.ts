@@ -14,7 +14,7 @@ app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    "Origin, X-Requested-With, Content-Type, Accept",
   );
   next();
 });
@@ -22,8 +22,9 @@ app.use((req, res, next) => {
 app.use("/", router);
 
 const PORT = Number(process.env.PORT);
+const HOST = String(process.env.HOST);
 
-app.listen(PORT, "0.0.0.0", () => {
+app.listen(PORT, HOST, () => {
   sequelize
     .authenticate()
     .then(() => {
