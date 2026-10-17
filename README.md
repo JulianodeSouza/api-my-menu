@@ -35,18 +35,18 @@ O projeto segue um padrão de arquitetura em camadas (Layered Architecture) foca
 2. **Tipagem Forte:**
    - A tipagem deve ser declarada em arquivos específicos em `/src/types/` para reaproveitamento em diferentes camadas.
 3. **Mapeamento de Caminhos (Aliases):**
-   - É permitido e encorajado o uso do alias `@/` para importar módulos a fim de evitar `../../../../`, facilitando refatorações futuras.
+   - É permitido uso do alias `@/` para importar módulos a fim de evitar `../../../../`, facilitando refatorações futuras.
 
 4. **Tratamento de Erros:**
-   - Erros devem ser capturados e manipulados pelo middleware centralizado (`/src/api/middlewares/error-handler/`), garantindo consistência e padronização da resposta da API.
+   - Erros são capturados e manipulados pelo middleware centralizado (`/src/api/middlewares/error-handler/`), garantindo consistência e padronização da resposta da API.
 
 5. **Migrações e Modelos:**
-   - Sempre utilize as migrations antes de fazer modificações diretas no banco de dados. Os modelos do TS devem ser o reflexo exato da estrutura definida nas migrations.
+   - É sempre utilizado migrations antes de fazer modificações diretas no banco de dados.
 
 6. **Padrões de Nomenclatura (Naming Conventions):**
-   - **Variáveis, Atributos e Funções:** Devem ser escritas em `camelCase` (ex: `categoryId`, `getUser`).
-   - **Classes, Interfaces e Tipos:** Devem ser escritos em `PascalCase` (ex: `Category`, `MeasuredUnit`).
-   - **Constantes Globais e Variáveis de Ambiente:** Devem utilizar `UPPER_SNAKE_CASE` (ex: `DB_HOST`, `PORT`).
+   - **Variáveis, Atributos e Funções:** São escritas em `camelCase` (ex: `categoryId`, `getUser`).
+   - **Classes, Interfaces e Tipos:** São escritos em `PascalCase` (ex: `Category`, `MeasuredUnit`).
+   - **Constantes Globais e Variáveis de Ambiente:** São utilizadas `UPPER_SNAKE_CASE` (ex: `DB_HOST`, `PORT`).
 
 7. **Padrões de Tipagem (Type Patterns):**
    - **Nomenclatura de Tipos:** Use o prefixo `I` para nomes de tipos, escrito em `PascalCase` após o prefixo.
