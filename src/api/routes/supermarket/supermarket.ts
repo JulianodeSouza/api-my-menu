@@ -1,5 +1,6 @@
 import PurchaseListService from "@/services/purchaseList";
 import PurchaseListDeleteService from "@/services/purchaseList/delete";
+import PurchaseListEditService from "@/services/purchaseList/edit";
 import PurchaseListRegisterService from "@/services/purchaseList/register";
 import { Request, Response } from "express";
 
@@ -44,4 +45,13 @@ export async function removeItem(_req: Request, _res: Response) {
   await new PurchaseListDeleteService().removeItem(idItem);
 
   _res.json({});
+}
+
+export async function editItem(_req: Request, _res: Response) {
+  const idItem = Number(_req.params.id);
+  const data = _req.body;
+  
+  await new PurchaseListEditService().editItem(idItem, data);
+
+  await _res.json({});
 }

@@ -1,5 +1,6 @@
 export type IMeasuredUnit = {
-  id: number;
+  id?: number;
   name: string;
-  insert_datetime?: Date;
+  unitSymbol: string;
+  insertDatetime?: Date;
 };

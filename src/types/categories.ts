@@ -1,6 +1,6 @@
 export type ICategories = {
-  id: number;
+  id?: number;
   name: string;
-  icon: string;
-  insertDatetime: Date;
+  icon?: string;
+  insertDatetime?: Date;
 };
