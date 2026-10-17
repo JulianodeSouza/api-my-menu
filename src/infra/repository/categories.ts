@@ -19,6 +19,24 @@ export default class CategoriesRepository extends RepositoryModel {
     });
   }
 
+  async updateRegister(
+    idCategory: number,
+    data: Partial<ICategories>,
+  ): Promise<void> {
+    await this.update({
+      model: CategoryEntity,
+      params: { id: idCategory },
+      data: this.formatToUpdate(data),
+    });
+  }
+
+  async removeRegister(idCategory: number): Promise<void> {
+    await this.remove({
+      model: CategoryEntity,
+      params: { id: idCategory },
+    });
+  }
+
   private formatToSave(
     data: ICategories,
     isUpdate: boolean = false,
@@ -33,5 +51,14 @@ export default class CategoriesRepository extends RepositoryModel {
     }
 
     return itemToSave;
+  }
+
+  private formatToUpdate(data: Partial<ICategories>): Partial<CategoryEntity> {
+    const itemToUpdate: Partial<CategoryEntity> = {};
+
+    if (data.name !== undefined) itemToUpdate.name = data.name;
+    if (data.icon !== undefined) itemToUpdate.icon = data.icon;
+
+    return itemToUpdate;
   }
 }

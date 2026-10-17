@@ -18,7 +18,7 @@ O projeto segue um padrão de arquitetura em camadas (Layered Architecture) foca
 
 - **`/src/api/`**: Camada de entrada (Entrypoint web/HTTP). Contém as rotas (`routes/`) e middlewares (tratamento de erros, validações).
 - **`/src/services/`**: Camada de regras de negócio. Orquestra as operações entre a API e as camadas de infraestrutura.
-- **`/src/infra/`**: Camada de banco de dados e infraestrutura. 
+- **`/src/infra/`**: Camada de banco de dados e infraestrutura.
   - **`models/`**: Definições dos modelos do Sequelize.
   - **`migrations/`**: Arquivos de migração de banco de dados (histórico do DB).
   - **`repository/`**: Camada de abstração que faz a ponte entre a lógica de serviços (`services/`) e o banco de dados (`models/`). Isolam as queries em regras bem definidas.
@@ -32,9 +32,8 @@ O projeto segue um padrão de arquitetura em camadas (Layered Architecture) foca
    - Serviços (`services/`) contêm **apenas regras de negócio** e não lidam com Request/Response diretamente.
    - Repositórios (`infra/repository/`) processam a manipulação direta com o Banco de Dados.
 
-2. **Tipagem Forte:** 
+2. **Tipagem Forte:**
    - A tipagem deve ser declarada em arquivos específicos em `/src/types/` para reaproveitamento em diferentes camadas.
-   
 3. **Mapeamento de Caminhos (Aliases):**
    - É permitido e encorajado o uso do alias `@/` para importar módulos a fim de evitar `../../../../`, facilitando refatorações futuras.
 
@@ -49,7 +48,43 @@ O projeto segue um padrão de arquitetura em camadas (Layered Architecture) foca
    - **Classes, Interfaces e Tipos:** Devem ser escritos em `PascalCase` (ex: `Category`, `MeasuredUnit`).
    - **Constantes Globais e Variáveis de Ambiente:** Devem utilizar `UPPER_SNAKE_CASE` (ex: `DB_HOST`, `PORT`).
 
-7. **Padrões de Commit (Conventional Commits):**
+7. **Padrões de Tipagem (Type Patterns):**
+   - **Nomenclatura de Tipos:** Use o prefixo `I` para nomes de tipos, escrito em `PascalCase` após o prefixo.
+
+     ```typescript
+     // ✅ Padrão do projeto
+     export type ICategory = {
+       id: number;
+       name: string;
+       icon: string;
+       insertDatetime: Date;
+     };
+
+     export type IMeasuredUnit = {
+       id: number;
+       name: string;
+       insert_datetime?: Date;
+     };
+     ```
+
+   - **Uso de `type` ao invés de `interface`:** Sempre use `type` para declarar tipos de objetos neste projeto.
+   - **Organização de Tipos:** Todos os tipos devem ser definidos em `/src/types/` em arquivos separados por domínio (ex: `categories.ts`, `measuredUnit.ts`, `listPurchase.ts`).
+   - **Tipos Opcionais:** Use `?` para campos que podem não estar presentes ou ter valor indefinido.
+     ```typescript
+     // ✅ Padrão do projeto: campos opcionais com ?
+     export type IListPurchase = {
+       id: number;
+       name: string;
+       quantity: number;
+       totalCaught?: number; // Campo opcional
+       amount?: number;
+       checked?: boolean;
+     };
+     ```
+   - **Evite `any`:** Use tipos mais específicos para manter a segurança de tipos.
+   - **Exportação de Tipos:** Sempre exporte os tipos com `export type` para que possam ser reutilizados em diferentes camadas da aplicação.
+
+8. **Padrões de Commit (Conventional Commits):**
    - Utilize o padrão [Conventional Commits](https://www.conventionalcommits.org/pt-br/v1.0.0/) nas mensagens.
    - **Prefixos mais comuns:**
      - `feat:` Nova funcionalidade (feature).
@@ -62,21 +97,24 @@ O projeto segue um padrão de arquitetura em camadas (Layered Architecture) foca
 ## ⚙️ Instalação e Execução
 
 ### Pré-requisitos
+
 - Node.js (versão 18+ recomendada)
 - MySQL configurado e em execução.
 
 ### Passos para executar localmente:
 
 1. **Instalar dependências:**
+
    ```bash
    npm install
    ```
 
 2. **Configuração de Variáveis de Ambiente:**
-   - Configure o ambiente baseando-se nas credenciais do seu banco de dados MySQL (exemplo usando `.env`). *(Se aplicável: copie `.env.example` para `.env`)*.
+   - Configure o ambiente baseando-se nas credenciais do seu banco de dados MySQL (exemplo usando `.env`).
 
 3. **Geração e Execução das Migrations:**
    O script de desenvolvimento executa as migrations automaticamente na inicialização, mas você pode criá-las ou rodá-las manualmente:
+
    ```bash
    npm run migration:generate  # Script para facilitar a criação de uma nova migration
    npm run migrations          # Roda as pendentes
@@ -85,12 +123,14 @@ O projeto segue um padrão de arquitetura em camadas (Layered Architecture) foca
 
 4. **Executar a API em modo Desenvolvimento:**
    Executará automaticamente a stack usando nodemon. As `migrations` rodam no start da JVM.
+
    ```bash
    npm run start:dev
    ```
 
 5. **Build para Produção:**
    Compila o TypeScript (`build`) e resolve os path aliases para JS.
+
    ```bash
    npm run build
    ```

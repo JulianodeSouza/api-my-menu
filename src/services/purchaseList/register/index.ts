@@ -1,7 +1,7 @@
 import ErrorApi from "@/api/middlewares/errors";
-import { ListPurchaseEntity } from "@/infra/models/listPurchase";
 import { ICheckedData, IListPurchase } from "@/types/listPurchase";
 import PurchaseListRegisterProvider from "./provider";
+import { validateData } from "@/utils/validateData";
 
 export default class PurchaseListRegisterService {
   private provider: PurchaseListRegisterProvider;
@@ -11,9 +11,9 @@ export default class PurchaseListRegisterService {
   }
 
   async registerItem(data: IListPurchase): Promise<void> {
-    const validateData = await this.validateData(data);
+    const validatedData = await validateData(data, "register");
 
-    if (!validateData) {
+    if (!validatedData) {
       throw new ErrorApi("Dados inválidos", 400);
     }
 
@@ -25,24 +25,16 @@ export default class PurchaseListRegisterService {
       throw new ErrorApi("Item inválido", 400);
     }
 
+    const validatedData = await validateData(data, "mark");
+
+    if (!validatedData) {
+      throw new ErrorApi("Dados inválidos", 400);
+    }
+
     await this.provider.markItem(idItem, data);
   }
 
   async finishPurchase(): Promise<void> {
     await this.provider.finishPurchase();
-  }
-
-  private validateData(data: Partial<ListPurchaseEntity>): boolean {
-    const { name, quantity } = data;
-
-    if (!name || !quantity) {
-      return false;
-    }
-
-    if (typeof quantity !== "number" || typeof name !== "string") {
-      return false;
-    }
-
-    return true;
   }
 }

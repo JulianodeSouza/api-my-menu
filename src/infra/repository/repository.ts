@@ -44,6 +44,12 @@ export default class RepositoryModel {
     });
   }
 
+  protected async remove(parameters: Parameters): Promise<void> {
+    await parameters.model.destroy({
+      where: parameters.params,
+    });
+  }
+
   protected async executeQuery<T>(parameters: Parameters): Promise<T[]> {
     const result = await parameters.model.sequelize.query(parameters.query, {
       type: parameters.type,
