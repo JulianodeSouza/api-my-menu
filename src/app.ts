@@ -4,7 +4,11 @@ if (process.env.NODE_ENV === "production") {
 import express from "express";
 import { router } from "./api";
 import sequelize from "./infra/models";
+import { captureError, initSentry, Sentry } from "./infra/sentry";
 import { logMessage } from "./services/utils";
+
+initSentry();
+
 const app = express();
 
 app.use(express.json());
@@ -21,6 +25,18 @@ app.use((req, res, next) => {
 
 app.use("/", router);
 
+process.on("unhandledRejection", (reason) => {
+  logMessage(`Unhandled Rejection: ${reason}`);
+  captureError(reason, { processEvent: "unhandledRejection" });
+});
+
+process.on("uncaughtException", async (error) => {
+  logMessage(`Uncaught Exception: ${error}`);
+  captureError(error, { processEvent: "uncaughtException" });
+  await Sentry.flush(2000);
+  process.exit(1);
+});
+
 const PORT = Number(process.env.PORT);
 const HOST = String(process.env.HOST);
 
@@ -33,5 +49,6 @@ app.listen(PORT, HOST, () => {
     })
     .catch((error) => {
       logMessage(`Erro na conexão com o banco: ${error}`);
+      captureError(error, { processEvent: "databaseAuthenticateError" });
     });
 });

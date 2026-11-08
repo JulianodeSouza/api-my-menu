@@ -11,12 +11,17 @@ export default class CategoriesRepository extends RepositoryModel {
     return categories;
   }
 
-  async register(data: ICategories): Promise<void> {
+  async register(data: ICategories): Promise<{ id: number; name: string }> {
     const itemFormatted = this.formatToSave(data);
 
     await this.save({
       model: itemFormatted,
     });
+
+    return {
+      id: itemFormatted.id,
+      name: itemFormatted.name,
+    };
   }
 
   async updateRegister(
@@ -43,7 +48,7 @@ export default class CategoriesRepository extends RepositoryModel {
   ): CategoryEntity {
     const itemToSave: CategoryEntity = CategoryEntity.build({
       name: data.name,
-      icon: data.icon,
+      icon: data.icon || "Tag",
     });
 
     if (!isUpdate) {

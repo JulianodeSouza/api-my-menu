@@ -23,7 +23,7 @@ export async function saveItem(_req: Request, _res: Response) {
   const data = _req.body;
   await new PurchaseListRegisterService().registerItem(data);
 
-  _res.json({});
+  _res.status(201).json({});
 }
 
 export async function markItem(_req: Request, _res: Response) {
@@ -31,27 +31,27 @@ export async function markItem(_req: Request, _res: Response) {
   const data = _req.body;
   await new PurchaseListRegisterService().markItem(idItem, data);
 
-  _res.json({});
+  _res.json({ message: "Item atualizado com sucesso" });
 }
 
 export async function finishPurchase(_req: Request, _res: Response) {
   await new PurchaseListRegisterService().finishPurchase();
 
-  _res.json({});
+  _res.json({ message: "Compra finalizada com sucesso" });
 }
 
 export async function removeItem(_req: Request, _res: Response) {
   const idItem = Number(_req.params.id);
   await new PurchaseListDeleteService().removeItem(idItem);
 
-  _res.json({});
+  _res.json({ message: "Item removido com sucesso" });
 }
 
 export async function editItem(_req: Request, _res: Response) {
   const idItem = Number(_req.params.id);
   const data = _req.body;
-  
+
   await new PurchaseListEditService().editItem(idItem, data);
 
-  await _res.json({});
+  _res.json({ message: "Item atualizado com sucesso" });
 }

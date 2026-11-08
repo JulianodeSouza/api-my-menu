@@ -12,21 +12,23 @@ export async function getCategoriesList(_req: Request, _res: Response) {
 
 export async function registerCategory(_req: Request, _res: Response) {
   const data = _req.body;
-  await new CategoriesRegisterService().registerCategory(data);
+  const newCategory = await new CategoriesRegisterService().registerCategory(
+    data,
+  );
 
-  _res.json({});
+  _res.status(201).json(newCategory);
 }
 
 export async function editCategory(_req: Request, _res: Response) {
   const idCategory = Number(_req.params.id);
   await new CategoriesEditService().editCategory(idCategory, _req.body);
 
-  _res.json({});
+  _res.json({ id: idCategory, ..._req.body });
 }
 
 export async function removeCategory(_req: Request, _res: Response) {
   const idCategory = Number(_req.params.id);
   await new CategoriesDeleteService().removeCategory(idCategory);
 
-  _res.json({});
+  _res.json({ message: "Categoria removida com sucesso" });
 }

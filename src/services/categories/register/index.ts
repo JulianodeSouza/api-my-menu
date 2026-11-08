@@ -9,15 +9,22 @@ export default class CategoriesRegisterService {
     this.provider = new CategoriesRegisterProvider();
   }
 
-  async registerCategory(data: ICategories): Promise<void> {
+  async registerCategory(
+    data: ICategories,
+  ): Promise<{ id: number; name: string }> {
     if (
       typeof data?.name !== "string" ||
-      data.name.length === 0 ||
+      data.name.trim().length === 0 ||
       (data.icon !== undefined && typeof data.icon !== "string")
     ) {
       throw new ErrorApi("Dados inválidos", 400);
     }
 
-    await this.provider.registerCategory(data);
+    const payload: ICategories = {
+      name: data.name.trim(),
+      icon: data.icon && data.icon.trim().length > 0 ? data.icon.trim() : "Tag",
+    };
+
+    return await this.provider.registerCategory(payload);
   }
 }
