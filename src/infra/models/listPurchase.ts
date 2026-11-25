@@ -10,6 +10,7 @@ export class ListPurchaseEntity extends Model {
   declare amount: number;
   declare totalCaught: number;
   declare insert_datetime: Date;
+  declare finishDatePurchase?: Date;
   declare active: boolean;
 }
 

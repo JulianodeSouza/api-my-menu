@@ -10,13 +10,31 @@ export default class PurchaseListEditService {
     this.provider = new PurchaseEditProvider();
   }
 
-  async editItem(idItem: number, data: IListPurchase): Promise<void> {
-    const validatedData = await validateData(data);
+  async editItem(
+    idItem: number,
+    data: Partial<IListPurchase>,
+  ): Promise<void> {
+    if (!idItem || !Number.isInteger(idItem) || idItem <= 0) {
+      throw new ErrorApi("Item inválido", 400);
+    }
+
+    const validatedData = validateData(data, "edit");
 
     if (!validatedData) {
       throw new ErrorApi("Dados inválidos", 400);
     }
 
-    await this.provider.editItem(idItem, data);
+    const payload: Partial<IListPurchase> = {};
+
+    if (data.name !== undefined) payload.name = data.name.trim();
+    if (data.quantity !== undefined) payload.quantity = data.quantity;
+    if (data.category !== undefined) payload.category = Number(data.category);
+    if (data.measuredUnit !== undefined)
+      payload.measuredUnit = Number(data.measuredUnit);
+    if (data.totalCaught !== undefined) payload.totalCaught = data.totalCaught;
+    if (data.amount !== undefined) payload.amount = data.amount;
+    if (data.checked !== undefined) payload.checked = data.checked;
+
+    await this.provider.editItem(idItem, payload);
   }
 }
