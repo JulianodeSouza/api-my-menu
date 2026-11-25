@@ -21,7 +21,10 @@ export async function registerCategory(_req: Request, _res: Response) {
 
 export async function editCategory(_req: Request, _res: Response) {
   const idCategory = Number(_req.params.id);
-  await new CategoriesEditService().editCategory(idCategory, _req.body);
+  const updatedCategory = await new CategoriesEditService().editCategory(
+    idCategory,
+    _req.body,
+  );
 
   _res.json({ id: idCategory, ..._req.body });
 }

@@ -11,7 +11,18 @@ export default class CategoriesRepository extends RepositoryModel {
     return categories;
   }
 
-  async register(data: ICategories): Promise<{ id: number; name: string }> {
+  async getCategoryById(idCategory: number): Promise<CategoryEntity | null> {
+    const category = await this.getOne<CategoryEntity>({
+      model: CategoryEntity,
+      params: { id: idCategory },
+    });
+
+    return category;
+  }
+
+  async register(
+    data: ICategories,
+  ): Promise<{ id: number; name: string; icon: string }> {
     const itemFormatted = this.formatToSave(data);
 
     await this.save({
@@ -21,6 +32,7 @@ export default class CategoriesRepository extends RepositoryModel {
     return {
       id: itemFormatted.id,
       name: itemFormatted.name,
+      icon: itemFormatted.icon,
     };
   }
 
@@ -46,9 +58,14 @@ export default class CategoriesRepository extends RepositoryModel {
     data: ICategories,
     isUpdate: boolean = false,
   ): CategoryEntity {
+    const icon =
+      typeof data.icon === "string" && data.icon.trim().length > 0
+        ? data.icon.trim()
+        : "Tag";
+
     const itemToSave: CategoryEntity = CategoryEntity.build({
       name: data.name,
-      icon: data.icon || "Tag",
+      icon,
     });
 
     if (!isUpdate) {
@@ -62,7 +79,12 @@ export default class CategoriesRepository extends RepositoryModel {
     const itemToUpdate: Partial<CategoryEntity> = {};
 
     if (data.name !== undefined) itemToUpdate.name = data.name;
-    if (data.icon !== undefined) itemToUpdate.icon = data.icon;
+    if (data.icon !== undefined) {
+      itemToUpdate.icon =
+        typeof data.icon === "string" && data.icon.trim().length > 0
+          ? data.icon.trim()
+          : "Tag";
+    }
 
     return itemToUpdate;
   }

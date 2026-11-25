@@ -11,18 +11,23 @@ export default class CategoriesRegisterService {
 
   async registerCategory(
     data: ICategories,
-  ): Promise<{ id: number; name: string }> {
+  ): Promise<void> {
     if (
       typeof data?.name !== "string" ||
       data.name.trim().length === 0 ||
-      (data.icon !== undefined && typeof data.icon !== "string")
+      (data?.icon !== undefined &&
+        data?.icon !== null &&
+        typeof data.icon !== "string")
     ) {
       throw new ErrorApi("Dados inválidos", 400);
     }
 
     const payload: ICategories = {
       name: data.name.trim(),
-      icon: data.icon && data.icon.trim().length > 0 ? data.icon.trim() : "Tag",
+      icon:
+        typeof data?.icon === "string" && data.icon.trim().length > 0
+          ? data.icon.trim()
+          : "Tag",
     };
 
     return await this.provider.registerCategory(payload);

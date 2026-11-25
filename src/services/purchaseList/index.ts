@@ -31,7 +31,7 @@ export default class PurchaseListService {
           (category) => category.category === item.categoryName,
         );
 
-        purchaseListByCategory[index].items.push(item);
+        purchaseListByCategory[index].items.push(this.formatItem(item));
       }
     }
 
@@ -52,17 +52,17 @@ export default class PurchaseListService {
     return {
       id: item.id,
       name: item.name,
-      quantity: Number(item.quantity),
+      quantity: Number(item.quantity ?? 0),
       category: item.category,
       categoryName: item.categoryName,
       categoryIcon: item.categoryIcon,
       measuredUnitName: item.measuredUnitName,
       measuredUnit: item.measuredUnit,
       unitSymbol: item.unitSymbol,
-      active: !!item.active,
-      totalCaught: Number(item.totalCaught),
-      amount: Number(item.amount),
-      checked: !!item.checked,
+      active: Boolean(item.active),
+      totalCaught: Number(item.totalCaught ?? 0),
+      amount: Number(item.amount ?? 0),
+      checked: Boolean(item.checked),
     };
   }
 }
