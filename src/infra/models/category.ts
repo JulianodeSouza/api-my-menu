@@ -20,6 +20,7 @@ export default (sequelize: any) => {
       },
       icon: {
         type: DataTypes.STRING,
+        defaultValue: "Tag",
       },
       insert_datetime: {
         type: DataTypes.DATE,
