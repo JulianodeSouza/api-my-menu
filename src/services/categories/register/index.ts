@@ -30,6 +30,6 @@ export default class CategoriesRegisterService {
           : "Tag",
     };
 
-    return await this.provider.registerCategory(payload);
+    await this.provider.registerCategory(payload);
   }
 }
