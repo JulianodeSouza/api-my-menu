@@ -11,8 +11,9 @@
   - Migrations rodam automaticamente no `npm run start` e `npm run start:dev`.
 - **Monitoramento (`@sentry/node` v11)**:
   - Inicializado antes de qualquer outro módulo via `src/instrument.ts` e hook de runtime `--import @sentry/node/import` (com `--enable-source-maps` em produção).
-  - Habilitado em `development` e `production` sempre que `SENTRY_DSN` estiver configurado (desativado em `NODE_ENV === "test"`).
+  - Habilitado por padrão apenas em `production` (ou fora de produção quando `SENTRY_ENABLED === "true"`), desde que `SENTRY_DSN` esteja configurado.
   - Captura automática de erros HTTP `>= 500` e spans via `expressIntegration` + fallback `Sentry.setupExpressErrorHandler(app)` antes do `errorHandler`, além de integrações nativas para `uncaughtException`/`unhandledRejection` e `captureError()` explícito em `/health` e falha de autenticação do MySQL no boot.
+  - Feedback explícito em console (`[Sentry] ...`) para status/motivo de ativação ou desativação, eventos ignorados (`< 500` ou SDK desativado), eventos em envio (`beforeSendEvent` com `event_id`) e confirmação/falha de entrega HTTP ao Sentry (`afterSendEvent`).
 
 ## Padrões Arquiteturais e de Código
 
