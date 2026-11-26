@@ -12,14 +12,15 @@ api-my-menu/
 │   └── shopping-list.md       # Lista de supermercado
 ├── memory-bank/               # Memória persistente do projeto (arquitetura, decisões, contexto)
 └── src/
-    ├── app.ts                 # Bootstrap: module-alias (prod), Sentry, Express, CORS, router, handlers globais e listen()
+    ├── instrument.ts          # Preload: module-alias (prod) e initSentry() antes dos imports da aplicação
+    ├── app.ts                 # Bootstrap Express, CORS, router, Sentry.setupExpressErrorHandler, errorHandler e listen()
     ├── api/
-    │   ├── index.ts           # Monta rotas raiz + CORS de métodos + errorHandler
+    │   ├── index.ts           # Monta rotas raiz + CORS de métodos
     │   ├── middlewares/
-    │   │   ├── error-handler/ # Middleware centralizado de erros (responde JSON e envia 5xx ao Sentry)
+    │   │   ├── error-handler/ # Middleware centralizado de erros (responde JSON padronizado)
     │   │   └── errors/        # Classe ErrorApi(message, statusCode)
     │   └── routes/            # Handlers HTTP agrupados por domínio
-    │       ├── health/        # GET /health (handler ativo em index.ts)
+    │       ├── health/        # GET /health (index.ts → health.ts)
     │       ├── supermarket/   # /list-supermarket
     │       ├── categories/    # /categories
     │       └── measuredUnits/ # /measuredUnits
@@ -59,7 +60,7 @@ HTTP Request
 
 | Prefixo | Método e Rota | Handler | Descrição |
 | :--- | :--- | :--- | :--- |
-| `/health` | `GET /health` | `routes/health/index.ts` | Testa conexão com MySQL (`200` ou `503`) |
+| `/health` | `GET /health` | `health.ts` | Testa conexão com MySQL (`200` ou `503`) |
 | `/list-supermarket` | `GET /list-supermarket` | `supermarket.ts` | Lista itens ativos (`active=1`, `finish_date_purchase IS NULL`) agrupados por categoria |
 | `/list-supermarket` | `GET /list-supermarket/item/:id` | `supermarket.ts` | Busca um item específico por ID |
 | `/list-supermarket` | `POST /list-supermarket` | `supermarket.ts` | Cadastra novo item (`201`) |
