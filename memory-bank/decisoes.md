@@ -3,13 +3,16 @@
 ## Stack e Ferramentas
 
 - **Express 5 (`^5.1.0`)**: rejeições em handlers `async` propagam nativamente ao `errorHandler` sem `try/catch` repetitivo.
-- **TypeScript (`strict: true`, `ES2020`, `CommonJS`, `allowJs`/`checkJs`)**: build via `tsc && tsc-alias`; desenvolvimento via `nodemon --exec tsx src/app.ts`.
-- **Path Alias `@/*`**: mapeado para `./src/*` no `tsconfig.json` e resolvido para `build/` em produção via `module-alias/register` (ativado condicionalmente quando `NODE_ENV === "production"` em `src/app.ts`).
+- **TypeScript (`strict: true`, `ES2020`, `CommonJS`, `sourceMap: true`, `allowJs`/`checkJs`)**: build via `tsc && tsc-alias`; desenvolvimento via `nodemon --exec "tsx --import @sentry/node/import src/app.ts"`.
+- **Path Alias `@/*`**: mapeado para `./src/*` no `tsconfig.json` e resolvido para `build/` em produção via `module-alias/register` (ativado condicionalmente quando `NODE_ENV === "production"` em `src/instrument.ts`).
 - **Sequelize 6 + `mysql2`**:
   - `timestamps: false` globalmente (datas de inserção/finalização são gerenciadas manualmente).
   - `timezone: "-03:00"` e `pool: { max: 1 }` configurados em `src/infra/models/index.ts`.
   - Migrations rodam automaticamente no `npm run start` e `npm run start:dev`.
-- **Monitoramento (`@sentry/node`)**: centralizado em `src/infra/sentry/index.ts`, integrado ao `errorHandler` (status `>= 500`), `/health` e eventos globais `unhandledRejection` / `uncaughtException`.
+- **Monitoramento (`@sentry/node` v11)**:
+  - Inicializado antes de qualquer outro módulo via `src/instrument.ts` e hook de runtime `--import @sentry/node/import` (com `--enable-source-maps` em produção).
+  - Habilitado em `development` e `production` sempre que `SENTRY_DSN` estiver configurado (desativado em `NODE_ENV === "test"`).
+  - Captura automática de erros HTTP `>= 500` e spans via `expressIntegration` + fallback `Sentry.setupExpressErrorHandler(app)` antes do `errorHandler`, além de integrações nativas para `uncaughtException`/`unhandledRejection` e `captureError()` explícito em `/health` e falha de autenticação do MySQL no boot.
 
 ## Padrões Arquiteturais e de Código
 
@@ -41,11 +44,9 @@
 
 ## Pontos de Atenção / Dívidas Técnicas Identificadas
 
-- **Sentry em produção**: em `src/infra/sentry/index.ts`, a condição `if (!dsn || isSentryInitialized || process.env.NODE_ENV === "production") return;` desabilita o Sentry quando `NODE_ENV === "production"`. Validar antes de contar com alertas em produção.
 - **Testes automatizados**: ainda não existem (recomendado Jest + Supertest, extraindo `app` do `listen()` em `src/app.ts`).
 - **Inconsistências menores de contrato/código**:
   - `POST /categories`: `CategoriesRegisterService.registerCategory` atualmente retorna `void` (alterado no commit `749b4d4`), divergindo da spec `docs/specs/settings.md` que documenta `{ id, name, icon }`.
   - `PUT /categories/:id`: o controller responde `{ id, ..._req.body }` em vez da variável `updatedCategory` retornada pelo service.
-  - `src/api/routes/health/health.ts` existe no repositório, mas `src/api/routes/health/index.ts` implementa o handler inline e não o importa.
   - `finishPurchase()` executa um `UPDATE` por item em loop em vez de um único `UPDATE` em lote.
   - Sem camada de autenticação/autorização implementada atualmente (API aberta, CORS `*`).
